@@ -1,0 +1,77 @@
+docker-compose up -d  (啟動)
+docker-compose down   (刪除)
+docker ps -a 
+docker logs -f hornet
+netstat -ano | findstr 8081  (看端口)
+
+
+
+Test-NetConnection -ComputerName 127.0.0.1 -Port 8081
+
+ curl http://localhost:14265/api/core/v2/info 
+
+
+Get-Process -Id 29604
+
+docker cp hornet:/app/jwt-token.txt ./jwt-token.txt
+
+docker ps | grep dashboar #檢查 dashboard 容器的 ports 映射
+
+
+載點: https://github.com/iotaledger/hornet?utm_source=chatgpt.com
+ 
+
+推薦日常操作
+
+開始玩：
+
+./run.sh -d
+
+
+下班或要關機：
+
+docker compose down
+
+
+想完全重置整個 private tangle：
+
+./cleanup.sh && sudo ./bootstrap.sh && ./run.sh -d
+
+
+安裝@iota_sdk 
+	安裝 Rust（因為 @iota/client 有原生 binding）
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	source $HOME/.cargo/env
+	rustc --version
+	cargo --version
+	安裝node
+	curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+	node -v
+	npm -v
+
+	npm init -y
+	npm install @iota/sdk
+
+
+
+
+節點狀態 curl "http://localhost:14265/api/core/v2/info"
+
+
+查錢:
+	curl "http://localhost:14265/api/indexer/v1/outputs/basic?address=tst1qr09kc2639gjspxx70pxw0q7uszvg06nt03zlvvyvzx6r42n08l770q9q5z"
+
+生成自己的 Seed & 地址:
+	head /dev/urandom | tr -dc 'A-Z9' | head -c81   (產生seed)
+
+	docker run --rm hornet:dev tool seed-to-address \
+  --seed "MYSEED9EXAMPLE9FOR9TEST9ONLY9DONT9USE9IN9MAIN9NET9ABCDEFGHIJKLMN9" \
+  --index 0   (產生地址)
+
+查交易block內容:
+	http://localhost:14265/api/core/v2/blocks/0xa96248e97a3d17476d7b650de9bb22afdaedf127d4ae965a0ccdb74246e516b4
+
+查看交易是否被 milestone 確認:
+	curl http://localhost:14265/api/core/v2/blocks/<blockId>/metadata
+
+	
