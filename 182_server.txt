@@ -1,0 +1,12 @@
+C:\Users\alex0>ssh e521@163.13.132.182
+The authenticity of host '163.13.132.182 (163.13.132.182)' can't be established.
+ED25519 key fingerprint is SHA256:wYslzunNeYkN+T2zbaTxJLKnXi1VX1XdMddsSUYyX/A.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+
+防火牆:
+etc/hosts.allow
+fail2band
+
+neofetch(查規格)
+排查cpu,gpu資源使用率
