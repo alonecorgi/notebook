@@ -1,0 +1,103 @@
+20250927
+
+主機帳密:
+ tkuece Tkuece      (主)
+ rui    614450038
+ yang   613450021
+
+manage 帳密:
+  eetkuccpa0302
+  u#*Mz}9mO8
+
+  613450021
+  tkueceE521*
+
+apache2 設定路徑 :
+1: (http) =>  /etc/apache2/sites-available/ee.tku.edu.tw.conf
+2: (https) =>  /etc/apache2/sites-available/eetku-ssl.conf
+
+檔案位子:
+/var/www/html/....
+/var/log/apache2/error_log (錯誤 log)
+
+備份位子:
+/backup
+
+資料庫帳密(phpMyAdmin):
+tkuece 
+tkuece
+
+資料庫名稱: ee_tku
+
+
+ssl自創憑證位子(查/etc/apache2/sites-available/eetku-ssl.conf):
+/etc/ssl/mycerts/mycert.crt 
+/etc/ssl/mycerts/mycert.key
+
+
+關掉apache2 conf指令:  sudo a2dissite  (eetku-ssl.conf) 改要關的,conf2檔名
+開啟apache2 conf指令:  sudo a2ensite   (ee.tku.edu.tw.conf)
+
+改完要:
+sudo systemctl reload apache2
+
+主機名查看更改指令:
+sudo nano /etc/hosts  
+
+
+網卡狀態:
+ip link  (查網卡名)
+
+ip設定檔位置:
+ /etc/netplan/01-netcfg.yaml 
+network:
+  version: 2
+  renderer: networkd   # 如果你是 Desktop，可以改成 NetworkManager
+  ethernets:
+    enp2s0:
+      dhcp4: no
+      addresses:
+        - 163.13.132.252/24
+      routes:
+        - to: default
+          via: 163.13.132.254
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+
+SMB檔案(備份到NAS):
+	/mnt/ee_nasweb  聯系上Public
+
+解壓縮.sql
+mkdir -p ~/tmp_sql
+gzip -dc /backup/ee_tku_db_2025-09-03.sql.gz > ~/tmp_sql/ee_tku_db_2025-09-03.sql
+
+gzip -dc ee_tku_db_2025-09-04.sql.gz > ee_tku_db_2025-09-04.sql 
+diff -u ee_tku_db_2025-09-04.sql ee_tku_db_2025-09-05.sql | less 
+diff -u ee_tku_db_2025-09-04.sql ee_tku_db_2025-09-06.sql | grep '^+[^+]'
+diff -u ee_tku_db_2025-09-04.sql ee_tku_db_2025-09-06.sql \
+  | grep '^+[^+]' \
+  | grep 'INSERT'
+
+
+
+ssl:
+	sudo openssl x509 -in /etc/letsencrypt/live/www.test.ee.tku.edu.tw/fullchain.pem -noout -text | grep DNS: (查網域)
+	
+	sudo certbot certonly --standalone -d www.ee.tku.edu.tw
+	
+	apache改動:
+	SSLEngine on
+    	SSLCertificateFile /etc/letsencrypt/live/www.ee.tku.edu.tw/fullchain.pem
+    	SSLCertificateKeyFile /etc/letsencrypt/live/www.ee.tku.edu.tw/privkey.pem
+
+	sudo apache2ctl configtest
+	sudo systemctl start apache2
+	
+	
+	刪除舊憑證:
+	sudo certbot delete
+
+
+

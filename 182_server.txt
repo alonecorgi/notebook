@@ -10,3 +10,5 @@ fail2band
 
 neofetch(查規格)
 排查cpu,gpu資源使用率
+
+Termius好用
