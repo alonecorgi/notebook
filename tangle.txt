@@ -45,13 +45,19 @@ docker compose down
 	rustc --version
 	cargo --version
 	安裝node
+	sudo npm install -g typescript
 	curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+	sudo apt-get install -y nodejs
 	node -v
 	npm -v
 
 	npm init -y
-	npm install @iota/sdk
+	# 安裝 Node 類型定義
+	npm install --save-dev @types/node
 
+	# 確認 TypeScript 版本 >= 5.0
+	npm install --save-dev typescript@latest
+	npm install @iota/sdk
 
 
 
@@ -73,5 +79,8 @@ docker compose down
 
 查看交易是否被 milestone 確認:
 	curl http://localhost:14265/api/core/v2/blocks/<blockId>/metadata
+
+dashboard http://localhost:8011
+
 
 	
