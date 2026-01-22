@@ -12,7 +12,10 @@ manage 帳密:
 系上nas: 163.13.132.76
    admin
    Tkuecee629
-
+使用Samba連線
+rsync -av --delete /backup/ /mnt/nas_eeweb/   用 rsync 定期同步
+crontab -e
+0 1 * * * mountpoint -q /mnt/nas_eeweb && rsync -av --delete /backup/ /mnt/nas_eeweb/
 
 apache2 設定路徑 :
 1: (http) =>  /etc/apache2/sites-available/ee.tku.edu.tw.conf
