@@ -9,8 +9,10 @@ manage 帳密:
   eetkuccpa0302
   u#*Mz}9mO8
 
-  613450021
-  tkueceE521*
+系上nas: 163.13.132.76
+   admin
+   Tkuecee629
+
 
 apache2 設定路徑 :
 1: (http) =>  /etc/apache2/sites-available/ee.tku.edu.tw.conf
