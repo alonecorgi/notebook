@@ -104,5 +104,21 @@ ssl:
 	刪除舊憑證:
 	sudo certbot delete
 
+	更新憑證:
+	sudo certbot --apache -d www.ee.tku.edu.tw -d ee.tku.edu.tw
 
+
+
+# 日誌
+路徑在:/var/log/apache2/
+
+    ErrorLog ${APACHE_LOG_DIR}/ee.tku.edu_error.log
+    CustomLog ${APACHE_LOG_DIR}/ee.tku.edu_access.log combined
+
+    ErrorLog ${APACHE_LOG_DIR}/ee.tku.edu_ssl_error.log
+    CustomLog ${APACHE_LOG_DIR}/ee.tku.edu_ssl_access.log combined
+    
+    改天數  sudo nano /etc/logrotate.d/apache2
+	    sudo logrotate -d /etc/logrotate.d/apache2
+ grep -R "CustomLog" /etc/apache2
 
